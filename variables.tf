@@ -16,34 +16,45 @@ variable "walltime" {
     default = "1"
 }
 
+variable "nodes_selector" {
+    description = "Nodes selector (OAR SQL notation surrounded by curly brackets)"
+    type = string
+    default = ""
+
+    validation {
+      condition = var.nodes_selector == "" || length(regexall("{.*}",var.nodes_selector)) > 0
+      error_message = "Nodes selector must be surrounded by curly brackets, \"{...}\"."
+    }
+}
+
 variable "username" {
     description = "Grid'5000 account username"
     type = string
-    default = null
+    default = ""
 }
 
 variable "password" {
     description = "Grid'5000 account password"
     type = string
-    default = null
+    default = ""
 }
 
 variable "restfully_file" {
     description = "Path of the restfully config file for API authentication"
     type = string
-    default = null
+    default = ""
 }
 
 variable "bastion_host" {
     description = "Bastion host"
     type = string
-    default = null
+    default = ""
 }
 
 variable "bastion_user" {
     description = "Bastion user"
     type = string
-    default = null
+    default = ""
 }
 
 variable "ssh_key_path" {
