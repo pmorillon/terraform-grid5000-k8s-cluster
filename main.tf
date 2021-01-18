@@ -40,10 +40,10 @@ resource "null_resource" "docker_install" {
     host          = element(sort(grid5000_deployment.k8s.nodes), count.index) 
     type          = "ssh"
     user          = "root"
-    agent         = var.bastion_host != null ? true : false
-    bastion_host  = var.bastion_host != null ? var.bastion_host : null
-    bastion_user  = var.bastion_user != null ? var.bastion_user : null
-    private_key   = var.bastion_host != null ? null : file("~/.ssh/id_rsa")
+    agent         = var.bastion_host != "" ? true : false
+    bastion_host  = var.bastion_host != "" ? var.bastion_host : null
+    bastion_user  = var.bastion_user != "" ? var.bastion_user : null
+    private_key   = var.bastion_host != "" ? null : file("~/.ssh/id_rsa")
   }
 
   provisioner "file" {
