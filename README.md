@@ -9,7 +9,6 @@ Basic usage of this module from a Grid'5000 frontend :
 ```hcl
 module "k8s_cluster" {
     source = "pmorillon/k8s-cluster/grid5000"
-    version = "~> 0.0.1"
 
     site = "lille"
 }
