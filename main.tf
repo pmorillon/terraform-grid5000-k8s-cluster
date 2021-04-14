@@ -77,16 +77,22 @@ resource "rke_cluster" "cluster" {
         }
     }
 
-    ssh_agent_auth = var.bastion_host != null ? true : false
+    ssh_agent_auth = var.bastion_host != "" ? true : false
 
     dynamic "bastion_host" {
         for_each = var.bastion_host[*]
         content {
             address = bastion_host.value
             user = var.bastion_user
-            ssh_key_path = var.ssh_key_path
-            port = 22
+            ssh_key_path = var.bastion_host != "" ? var.ssh_key_path : ""
+            port = var.bastion_host != "" ? 22 : ""
         }
+    }
+
+    lifecycle {
+      ignore_changes = [
+        bastion_host
+      ]
     }
 
 }
