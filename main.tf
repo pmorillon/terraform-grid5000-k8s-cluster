@@ -17,9 +17,9 @@ provider "grid5000" {
 }
 
 resource "grid5000_job" "k8s" {
-  name      = "Terraform RKE"
+  name      = var.oar_job_name
   site      = var.site
-  command   = "sleep 1d"
+  command   = "sleep 8d"
   resources = "${var.nodes_selector}/nodes=${var.nodes_count},walltime=${var.walltime}"
   types     = ["deploy"]
 }

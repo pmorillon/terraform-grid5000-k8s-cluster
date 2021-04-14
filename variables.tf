@@ -27,6 +27,12 @@ variable "nodes_selector" {
     }
 }
 
+variable "oar_job_name" {
+    description = "OAR job name"
+    type = string
+    default = "Terraform RKE"
+}
+
 variable "username" {
     description = "Grid'5000 account username"
     type = string
