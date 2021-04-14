@@ -3,11 +3,11 @@ terraform {
     required_providers {
       grid5000 = {
           source = "pmorillon/grid5000"
-          version = "~> 0.0.6"
+          version = "0.0.7"
       }
       rke = {
           source = "rancher/rke"
-          version = "~> 1.1.6"
+          version = "1.2.1"
       }
     }
 }
