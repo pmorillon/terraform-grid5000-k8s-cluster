@@ -22,8 +22,8 @@ variable "nodes_selector" {
     default = ""
 
     validation {
-      condition = var.nodes_selector == "" || length(regexall("{.*}",var.nodes_selector)) > 0
-      error_message = "Nodes selector must be surrounded by curly brackets, \"{...}\"."
+        condition = var.nodes_selector == "" || length(regexall("{.*}",var.nodes_selector)) > 0
+        error_message = "Nodes selector must be surrounded by curly brackets, \"{...}\"."
     }
 }
 
