@@ -47,7 +47,7 @@ resource "null_resource" "docker_install" {
   }
 
   provisioner "file" {
-    source = "${path.module}/files/install-docker.sh"
+    content = templatefile("${path.module}/files/install-docker.sh.tmpl", { pkgs = var.deb_extra_pkgs })
     destination = "/root/install-docker.sh"
   }
 

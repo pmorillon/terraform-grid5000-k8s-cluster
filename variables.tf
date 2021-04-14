@@ -62,3 +62,9 @@ variable "ssh_key_path" {
     type = string
     default = "~/.ssh/id_rsa"
 }
+
+variable "deb_extra_pkgs" {
+    description = "Debian packages to install on cluster nodes (eg. : ceph-common)"
+    type = list(string)
+    default = []
+}
