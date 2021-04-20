@@ -3,11 +3,11 @@ terraform {
     required_providers {
       grid5000 = {
           source = "pmorillon/grid5000"
-          version = "~> 0.0.6"
+          version = "0.0.7"
       }
       rke = {
           source = "rancher/rke"
-          version = "~> 1.1.6"
+          version = "1.2.1"
       }
     }
 }
@@ -17,9 +17,9 @@ provider "grid5000" {
 }
 
 resource "grid5000_job" "k8s" {
-  name      = "Terraform RKE"
+  name      = var.oar_job_name
   site      = var.site
-  command   = "sleep 1d"
+  command   = "sleep 8d"
   resources = "${var.nodes_selector}/nodes=${var.nodes_count},walltime=${var.walltime}"
   types     = ["deploy"]
 }
@@ -47,7 +47,7 @@ resource "null_resource" "docker_install" {
   }
 
   provisioner "file" {
-    source = "${path.module}/files/install-docker.sh"
+    content = templatefile("${path.module}/files/install-docker.sh.tmpl", { pkgs = var.deb_extra_pkgs })
     destination = "/root/install-docker.sh"
   }
 
@@ -77,16 +77,22 @@ resource "rke_cluster" "cluster" {
         }
     }
 
-    ssh_agent_auth = var.bastion_host != null ? true : false
+    ssh_agent_auth = var.bastion_host != "" ? true : false
 
     dynamic "bastion_host" {
         for_each = var.bastion_host[*]
         content {
             address = bastion_host.value
             user = var.bastion_user
-            ssh_key_path = var.ssh_key_path
-            port = 22
+            ssh_key_path = var.bastion_host != "" ? var.ssh_key_path : ""
+            port = var.bastion_host != "" ? 22 : ""
         }
+    }
+
+    lifecycle {
+      ignore_changes = [
+        bastion_host
+      ]
     }
 
 }

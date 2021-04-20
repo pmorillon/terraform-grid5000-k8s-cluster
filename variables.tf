@@ -22,9 +22,15 @@ variable "nodes_selector" {
     default = ""
 
     validation {
-      condition = var.nodes_selector == "" || length(regexall("{.*}",var.nodes_selector)) > 0
-      error_message = "Nodes selector must be surrounded by curly brackets, \"{...}\"."
+        condition = var.nodes_selector == "" || length(regexall("{.*}",var.nodes_selector)) > 0
+        error_message = "Nodes selector must be surrounded by curly brackets, \"{...}\"."
     }
+}
+
+variable "oar_job_name" {
+    description = "OAR job name"
+    type = string
+    default = "Terraform RKE"
 }
 
 variable "username" {
@@ -61,4 +67,10 @@ variable "ssh_key_path" {
     description = "SSH key path"
     type = string
     default = "~/.ssh/id_rsa"
+}
+
+variable "deb_extra_pkgs" {
+    description = "Debian packages to install on cluster nodes (eg. : ceph-common)"
+    type = list(string)
+    default = []
 }
