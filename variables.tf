@@ -74,3 +74,9 @@ variable "deb_extra_pkgs" {
     type = list(string)
     default = []
 }
+
+variable "kubernetes_version" {
+    description = "Rancher Kubernetes version"
+    type = string
+    default = "v1.22.4-rancher1-1"
+}

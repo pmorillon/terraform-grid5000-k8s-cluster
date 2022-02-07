@@ -21,6 +21,10 @@ output "disks_resources" {
     value = grid5000_job.k8s.disks_resources
 }
 
+output "subnets_resources" {
+    value = grid5000_job.k8s.subnets_resources
+}
+
 output "vlans_resources" {
     value = grid5000_job.k8s.vlans_resources
 }
