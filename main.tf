@@ -3,11 +3,11 @@ terraform {
     required_providers {
       grid5000 = {
           source = "pmorillon/grid5000"
-          version = "0.0.7"
+          version = "0.0.8"
       }
       rke = {
           source = "rancher/rke"
-          version = "1.2.1"
+          version = "1.3.0"
       }
     }
 }
@@ -86,8 +86,11 @@ resource "rke_cluster" "cluster" {
             user = var.bastion_user
             ssh_key_path = var.bastion_host != "" ? var.ssh_key_path : ""
             port = var.bastion_host != "" ? 22 : ""
+            ignore_proxy_env_vars = var.bastion_host != "" ? true : false
         }
     }
+
+    kubernetes_version = var.kubernetes_version
 
     lifecycle {
       ignore_changes = [
