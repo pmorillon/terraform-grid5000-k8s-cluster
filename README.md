@@ -11,19 +11,23 @@ module "k8s_cluster" {
     source = "pmorillon/k8s-cluster/grid5000"
 
     site = "lille"
+    # Default kubernetes version
+    #kubernetes_version = "v1.22.4-rancher1-1"
 }
 ```
+
+__Note:__ See RKE provider [Release notes](https://github.com/rancher/terraform-provider-rke/releases/tag/v1.3.0) for supported values of `kubernetes_version`.
 
 ```sh
 terraform init
 # ...
 terraform apply
 # ...
-export KUBECONFIG=./kube_config_cluster.yml
-kubectl get nodes -o wide  
-# NAME                           STATUS   ROLES               AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                       KERNEL-VERSION    CONTAINER-RUNTIME
-# chetemi-3.lille.grid5000.fr    Ready    controlplane,etcd   15m   v1.19.4   172.16.37.3   <none>        Debian GNU/Linux 10 (buster)   4.19.0-13-amd64   docker://19.3.14
-# chetemi-8.lille.grid5000.fr    Ready    worker              15m   v1.19.4   172.16.37.8   <none>        Debian GNU/Linux 10 (buster)   4.19.0-13-amd64   docker://19.3.14
-# chifflet-2.lille.grid5000.fr   Ready    worker              15m   v1.19.4   172.16.38.2   <none>        Debian GNU/Linux 10 (buster)   4.19.0-13-amd64   docker://19.3.14
-# chifflet-5.lille.grid5000.fr   Ready    worker              15m   v1.19.4   172.16.38.5   <none>        Debian GNU/Linux 10 (buster)   4.19.0-13-amd64   docker://19.3.14
+export KUBECONFIG=$(pwd)/kube_config_cluster.yml
+kubectl get nodes 
+# NAME                           STATUS   ROLES               AGE     VERSION
+# chetemi-1.lille.grid5000.fr    Ready    controlplane,etcd   2m29s   v1.22.4
+# chetemi-5.lille.grid5000.fr    Ready    worker              2m25s   v1.22.4
+# chifflet-3.lille.grid5000.fr   Ready    worker              2m28s   v1.22.4
+# chifflet-6.lille.grid5000.fr   Ready    worker              2m28s   v1.22.4
 ```
