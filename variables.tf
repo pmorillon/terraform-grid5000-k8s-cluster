@@ -27,6 +27,12 @@ variable "nodes_selector" {
     }
 }
 
+variable "oar_extra_types" {
+    description = "OAR extra types for resource reservation"
+    type = list
+    default = []
+}
+
 variable "oar_job_name" {
     description = "OAR job name"
     type = string

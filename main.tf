@@ -3,7 +3,7 @@ terraform {
     required_providers {
       grid5000 = {
           source = "pmorillon/grid5000"
-          version = "0.0.8"
+          version = "0.0.10"
       }
       rke = {
           source = "rancher/rke"
@@ -21,7 +21,7 @@ resource "grid5000_job" "k8s" {
   site      = var.site
   command   = "sleep 8d"
   resources = "${var.nodes_selector}/nodes=${var.nodes_count},walltime=${var.walltime}"
-  types     = ["deploy"]
+  types     = concat(["deploy"], var.oar_extra_types)
 }
 
 resource "grid5000_deployment" "k8s" {
